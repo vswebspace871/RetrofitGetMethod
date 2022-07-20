@@ -1,11 +1,13 @@
 package com.example.vbvretrofit;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 public interface API {
     // getting all data simply
@@ -45,14 +47,24 @@ public interface API {
 
 
     // agar do nahin 4,5 userID se query search karna ho to ArrayList bana do....
-    @GET("posts")
+   /* @GET("posts")
     Call<List<Model>> getPosts(
             @Query("userId") Integer[] userId,// agar query me NULL bhejna hai to , int se INTEGER karo
 
             @Query("_sort") String sort,// null value primitive par nahi kaam karegi
             @Query("_order") String order
-    );
+    );*/
 
+
+
+
+    // agar jo man me aaye wo Query perimeter pass karna ho to bus ek HASHMAP<String,String>
+    // ko pass kar do, QueryMap annotation ke sath
+    @GET("posts")
+    Call<List<Model>> getPosts(
+            // iske liye same getPosts() method me change krke dubara banaya hai Main Activity me
+            @QueryMap Map<String,String> perimeters
+            );
 
 
 

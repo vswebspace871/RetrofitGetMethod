@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,10 +64,49 @@ public class MainActivity extends AppCompatActivity {
         });
     }*/
 
-    private void getposts() {
+  /*  private void getposts() {
         api = RetrofitInstance.getRetrofit().create(API.class);
 
         api.getPosts(new Integer[]{1,2,3,4}, "id", "desc").enqueue(new Callback<List<Model>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Model>> call, @NonNull Response<List<Model>> response) {
+                if (!response.isSuccessful())
+                {
+                    Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                }
+                List<Model> data = response.body();
+                if (data != null) {
+                    for (Model item : data)
+                    {
+                        String content = "";
+                        content += "userId : "+item.getUserId()+"\n";
+                        content += "id : "+item.getId()+"\n";
+                        content += "title : "+item.getTitle()+"\n";
+                        content += "body : "+item.getSubTitle()+"\n\n\n";
+                        textView.append(content);
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Model>> call, @NonNull Throwable t) {
+                Toast.makeText(MainActivity.this, "Failed to load response", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }*/
+
+    private void getposts() {
+        Map<String, String> parameters = new HashMap<>(); // hash map create kara hai
+        parameters.put("userId", "1");
+        parameters.put("_sort", "id");
+        parameters.put("_order", "desc");
+
+
+        api = RetrofitInstance.getRetrofit().create(API.class);
+
+        api.getPosts(parameters).enqueue(new Callback<List<Model>>() {
             @Override
             public void onResponse(@NonNull Call<List<Model>> call, @NonNull Response<List<Model>> response) {
                 if (!response.isSuccessful())
